@@ -1,0 +1,261 @@
+/* --- Base Reset --- */
+html, body {
+  margin: 0;
+  padding: 0;
+  /* Switching to a clean Serif for that "classy" look */
+  font-family: 'Times New Roman', Times, serif; 
+  background-color: rgb(0, 17, 82);
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* --- THE FIX: Text Layer --- */
+.text-container {
+  z-index: 10; /* Lowered so it doesn't block the UI */
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  pointer-events: none; /* CRITICAL: Allows you to click the buttons underneath */
+}
+
+/* --- Weather Wrapper Layout --- */
+.weather-wrapper {
+  display: flex;
+  width: 85%;
+  max-width: 1100px;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 10vh;
+  pointer-events: auto; /* Re-enables clicking for buttons/inputs */
+}
+
+/* --- Typography Fixes --- */
+.temp {
+  font-size: 10rem;
+  line-height: 0.8;
+  margin: 0;
+}
+
+.city-name {
+  font-size: 3rem;
+  margin: 10px 0 5px 0;
+}
+
+.date-time {
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
+
+.condition-text {
+  font-size: 1.2rem;
+  margin-top: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* --- Search UI --- */
+.search_area {
+  width: 350px;
+}
+
+.search_field {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+  color: white;
+  font-size: 1.2rem;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+.search_button {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+/* --- Keep your morphing bubble code below this line --- */
+:root {
+  --color-bg1: rgb(108, 0, 162);
+  --color-bg2: rgb(0, 17, 82);
+  --color1: 18, 113, 255;
+  --color2: 221, 74, 255;
+  --color3: 100, 220, 255;
+  --color4: 200, 50, 50;
+  --color5: 180, 180, 50;
+  --color-interactive: 140, 100, 255;
+  --circle-size: 80%;
+  --blending: hard-light;
+}
+
+/* ... include the rest of your .gradient-bg and .g1, .g2 classes here ... */
+
+/* --- Animations --- */
+@keyframes moveInCircle {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes moveVertical {
+  0% { transform: translateY(-50%); }
+  50% { transform: translateY(50%); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes moveHorizontal {
+  0% { transform: translateX(-50%) translateY(-10%); }
+  50% { transform: translateX(50%) translateY(10%); }
+  100% { transform: translateX(-50%) translateY(-10%); }
+}
+
+/* --- Background Container --- */
+.gradient-bg {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+  top: 0;
+  left: 0;
+}
+
+.gradient-bg svg {
+  display: none; /* The SVG filter is referenced by ID, it doesn't need to be visible */
+}
+
+.gradients-container {
+  filter: url(#goo) blur(40px);
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Individual Bubbles --- */
+.g1, .g2, .g3, .g4, .g5, .interactive {
+  position: absolute;
+  mix-blend-mode: var(--blending);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  top: calc(50% - var(--circle-size) / 2);
+  left: calc(50% - var(--circle-size) / 2);
+  opacity: 1;
+}
+
+.g1 {
+  background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%) no-repeat;
+  animation: moveVertical 30s ease infinite;
+}
+
+.g2 {
+  background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%) no-repeat;
+  transform-origin: calc(50% - 400px);
+  animation: moveInCircle 20s reverse infinite;
+}
+
+.g3 {
+  background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%) no-repeat;
+  top: calc(50% - var(--circle-size) / 2 + 200px);
+  left: calc(50% - var(--circle-size) / 2 - 500px);
+  transform-origin: calc(50% + 400px);
+  animation: moveInCircle 40s linear infinite;
+}
+
+.g4 {
+  background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%) no-repeat;
+  transform-origin: calc(50% - 200px);
+  animation: moveHorizontal 40s ease infinite;
+  opacity: 0.7;
+}
+
+.g5 {
+  background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%) no-repeat;
+  width: calc(var(--circle-size) * 2);
+  height: calc(var(--circle-size) * 2);
+  top: calc(50% - var(--circle-size));
+  left: calc(50% - var(--circle-size));
+  transform-origin: calc(50% - 800px) calc(50% + 200px);
+  animation: moveInCircle 20s ease infinite;
+}
+
+.interactive {
+  background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%) no-repeat;
+  width: 100%;
+  height: 100%;
+  top: -50%;
+  left: -50%;
+  opacity: 0.7;
+}
+
+
+
+/* --- Search Bar Glow --- */
+.search_field {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  font-size: 1.2rem;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  outline: none;
+  /* Smooth transition for the glow */
+  transition: all 0.4s ease;
+}
+
+/* Glow when clicking inside or hovering over the input */
+.search_field:focus, 
+.search_field:hover {
+  border-bottom: 2px solid rgba(255, 255, 255, 1);
+  /* Creates a soft white spread behind the text */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+  /* Creates an underline glow */
+  box-shadow: 0 5px 15px -5px rgba(255, 255, 255, 0.3);
+}
+
+.search_button {
+  background-color: rgba(255, 255, 255, 0.1); /* Transparent white */
+  color: white; /* Text changes to white to look better on transparent */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
+  padding: 12px 24px;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  border-radius: 4px;
+  backdrop-filter: blur(5px); /* Blurs the moving bubbles behind the button */
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+/* Hover State: Transparent + Intense Glow */
+.search_button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
+  
+  /* The Glow Effect */
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 
+              0 0 30px rgba(255, 255, 255, 0.2);
+  
+  /* Text also glows slightly */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+/* Active State: Clicked */
+.search_button:active {
+  transform: translateY(0);
+  background-color: rgba(255, 255, 255, 0.3);
+}
