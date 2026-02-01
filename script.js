@@ -15,7 +15,7 @@ let target = 'Lucknow';
 
 // 1. Function to fetch data from API
 const fetchResults = async (targetLocation) => {
-    let url = `http://api.weatherapi.com/v1/current.json?key=cba6b9f45a4646bf8f0194107263101&q=${targetLocation}&aqi=no`;
+    let url = `https://api.weatherapi.com/v1/current.json?key=cba6b9f45a4646bf8f0194107263101&q=${targetLocation}&aqi=no`;
 
     try {
         const res = await fetch(url);
@@ -107,4 +107,5 @@ function getDayName(number){
 
 const cursor = document.querySelector('.cursor-follower');
 const searchBtn = document.querySelector('.search_button');
+
 
