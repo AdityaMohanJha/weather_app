@@ -52,7 +52,7 @@ function updateUI(temp, location, time, condition) {
 
     let currentDay = getDayName(new Date(splitDate).getDay());
 
-    if (temperatureField) temperatureField.innerText = temp;
+    if (temperatureField) temperatureField.innerText = temp + "°C";
     if (locationField) locationField.innerText = location;
     if (dateField) dateField.innerText = `${splitDate} ${currentDay} ${splitTime}`;
     if (weatherField) weatherField.innerText = condition;
@@ -107,5 +107,6 @@ function getDayName(number){
 
 const cursor = document.querySelector('.cursor-follower');
 const searchBtn = document.querySelector('.search_button');
+
 
 
